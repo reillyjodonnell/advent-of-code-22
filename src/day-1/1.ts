@@ -34,10 +34,31 @@ export function groupSums(data: string[]) {
 
 export function highestSum(data: number[]) {
   const max = Math.max(...data);
-  console.log(max);
+  return max;
+}
+
+export function sortSumsInDescendingOrder(data: number[]) {
+  const sorted = data.sort((a, b) => a - b);
+  return sorted;
+}
+
+export function getTop3Sums(sortedData: number[]) {
+  // sums must be sorted
+  return [
+    sortedData[sortedData.length - 1],
+    sortedData[sortedData.length - 2],
+    sortedData[sortedData.length - 3],
+  ];
+}
+
+export function sumNumbers(nums: number[]) {
+  return nums.reduce((a, b) => a + b);
 }
 
 const data = fileRead();
 const grouped = data ? groupValues(data) : null;
 const format = groupSums(grouped);
-highestSum(format);
+const sorted = sortSumsInDescendingOrder(format);
+const top3 = getTop3Sums(sorted);
+const summedTop3 = sumNumbers(top3);
+console.log(summedTop3);
