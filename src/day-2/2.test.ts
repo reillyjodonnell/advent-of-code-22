@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import {
   aggregateScorer,
+  determineShapeForOutcome,
+  formatDecisions,
   rockPaperScissorsScore,
+  scoreKeeper,
   shapeScore,
   textParser,
 } from './2';
@@ -39,11 +42,33 @@ describe('day 2 AoC problem', () => {
     expect(aggregateScorer(['Rock', 'Paper'])).toBe(8);
   });
 
-  it('should be able to parse different input', () => {
-    expect(aggregateScorer(['A', 'Y'])).toBe(8);
+  // it('should be able to parse different input', () => {
+  //   expect(aggregateScorer(['A', 'Y'])).toBe(8);
+  // });
+
+  it('should get an array of decisions from a text file', () => {
+    expect(textParser).toBeDefined();
   });
 
-  it('should be able to parse a text file to get arrays of decisions', () => {
-    expect(textParser).toBeDefined();
+  it('should format decisions correctly ', () => {
+    expect(formatDecisions).toBeDefined();
+  });
+
+  // it('should send formatted decisions off to be scored keeping track of the score', () => {
+  //   expect(scoreKeeper).toBeDefined();
+  //   expect(
+  //     scoreKeeper([
+  //       ['A', 'Y'],
+  //       ['B', 'Y'],
+  //     ])
+  //   ).toBe(13);
+  // });
+  describe('Now we know that the second column means how the game needs to end', () => {
+    it('should be able to parse the second column to mean win lose draw', () => {});
+    it('should determine which shape we need to match the outcome from the second column', () => {
+      expect(determineShapeForOutcome('Paper', 'Lose')).toBe('Rock');
+      expect(determineShapeForOutcome('Paper', 'Win')).toBe('Scissors');
+      expect(determineShapeForOutcome('Paper', 'Draw')).toBe('Paper');
+    });
   });
 });
