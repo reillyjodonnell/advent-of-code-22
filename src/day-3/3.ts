@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 export function firstCompartment(items: string) {
   const halfLength = items.length / 2;
   return items.slice(0, halfLength);
@@ -16,7 +18,7 @@ export function itemsInCommon({
   let itemsInCommon = '';
 
   for (let item of secondCompartment) {
-    if (firstCompartment.includes(item)) {
+    if (firstCompartment.includes(item) && !itemsInCommon.includes(item)) {
       itemsInCommon += item;
     }
   }
@@ -96,13 +98,44 @@ export function sumOfPriorities(listOfItems: number[]) {
   );
 }
 
-export function handleMultipleRucksacks(...items){
-    for( let item of items){
-        const firstCompartment = 
-        const secondCompartment =
+export function handleMultipleRucksacks(...items: string[]) {
+  const multipleRucksackPrioritySums: number[] = [];
+  for (let item of items) {
+    const firstCompartmentItems = firstCompartment(item);
+    const secondCompartmentItems = secondCompartment(item);
 
-        
-        
-    }
+    const commonItems = itemsInCommon({
+      firstCompartment: firstCompartmentItems,
+      secondCompartment: secondCompartmentItems,
+    });
 
+    const multiplePriorities = handleMultiplePrioritiesForitems(commonItems);
+    const sum = sumOfPriorities(multiplePriorities);
+    multipleRucksackPrioritySums.push(sum);
+  }
+  return multipleRucksackPrioritySums;
+}
+export function summedPrioritiesOfMultipleRucksacks(...args: string[]) {
+  const priorities: number[] = handleMultipleRucksacks(...args);
+  return sumOfPriorities(priorities);
+}
+
+export function textParser() {
+  try {
+    const data = fs.readFileSync('src/day-3/input.txt', {
+      encoding: 'utf8',
+    });
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+const text = textParser();
+const grouped = text && groupDecisions(text);
+
+console.log(grouped && summedPrioritiesOfMultipleRucksacks(...grouped));
+
+export function groupDecisions(text: string) {
+  const split = text.split(/\r?\n/);
+  return split;
 }

@@ -6,6 +6,8 @@ import {
   priorityForEachItem,
   handleMultiplePrioritiesForitems,
   sumOfPriorities,
+  handleMultipleRucksacks,
+  summedPrioritiesOfMultipleRucksacks,
 } from './3';
 
 describe('The rucksack compartment problem', () => {
@@ -48,13 +50,46 @@ describe('The rucksack compartment problem', () => {
   });
 
   it('should handle multiple items in multiple rucksacks with multiple summed priorities', () => {
-    expect(handleMultipleRucksacks('abcabc', 'defged', 'abcdea')).toBe([
-      6, 9, 1,
-    ]);
+    expect(handleMultipleRucksacks('abcabc', 'defged', 'abcdea')).toStrictEqual(
+      [6, 9, 1]
+    );
+    // expect(
+    //   handleMultipleRucksacks(
+    //     'GwrhJPDJCZFRcwfZWV',
+    //     'LjnQlqNpjjmpmQlLlqNfZRvQcTWcTSTTZcSQcZ'
+    //   )
+    // ).toStrictEqual([23, 86]);
+    expect(
+      handleMultipleRucksacks(
+        'vJrwpWtwJgWrhcsFMMfFFhFp',
+        'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',
+        'PmmdzqPrVvPwwTWBwg',
+        'wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn',
+        'ttgJtRGJQctTZtZT',
+        'CrZsJsPPZsGzwwsLwLmpwMDw'
+      )
+      //16 (p), 38 (L), 42 (P), 22 (v), 20 (t), and 19 (s)
+    ).toStrictEqual([16, 38, 42, 22, 20, 19]);
   });
   it('should also be able to handle giving one gross sum for all of the multiple rucksacks', () => {
     expect(
       summedPrioritiesOfMultipleRucksacks('abcabc', 'defged', 'abcdea')
     ).toBe(16);
+    // expect(
+    //   summedPrioritiesOfMultipleRucksacks(
+    //     'GwrhJPDJCZFRcwfZWV',
+    //     'LjnQlqNpjjmpmQlLlqNfZRvQcTWcTSTTZcSQcZ'
+    //   )
+    // ).toBe(109);
+    expect(
+      summedPrioritiesOfMultipleRucksacks(
+        'vJrwpWtwJgWrhcsFMMfFFhFp',
+        'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',
+        'PmmdzqPrVvPwwTWBwg',
+        'wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn',
+        'ttgJtRGJQctTZtZT',
+        'CrZsJsPPZsGzwwsLwLmpwMDw'
+      )
+    ).toBe(157);
   });
 });
