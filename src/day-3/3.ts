@@ -11,14 +11,20 @@ export function secondCompartment(items: string) {
 export function itemsInCommon({
   firstCompartment,
   secondCompartment,
+  thirdCompartment,
 }: {
   firstCompartment: string;
   secondCompartment: string;
+  thirdCompartment?: string;
 }) {
   let itemsInCommon = '';
 
-  for (let item of secondCompartment) {
-    if (firstCompartment.includes(item) && !itemsInCommon.includes(item)) {
+  for (let item of firstCompartment) {
+    if (
+      secondCompartment.includes(item) &&
+      !itemsInCommon.includes(item) &&
+      (thirdCompartment?.includes(item) ?? true)
+    ) {
       itemsInCommon += item;
     }
   }
@@ -98,6 +104,21 @@ export function sumOfPriorities(listOfItems: number[]) {
   );
 }
 
+export function group3LinesTogether(items: string[]) {
+  // start at 0
+  let tmp = [];
+
+  let group = [];
+  for (let i = 1; i <= items.length; i++) {
+    tmp.push(items[i - 1]);
+    if (i % 3 === 0) {
+      group.push(tmp);
+      tmp = [];
+    }
+  }
+  return group;
+}
+
 export function handleMultipleRucksacks(...items: string[]) {
   const multipleRucksackPrioritySums: number[] = [];
   for (let item of items) {
@@ -133,9 +154,26 @@ export function textParser() {
 const text = textParser();
 const grouped = text && groupDecisions(text);
 
-console.log(grouped && summedPrioritiesOfMultipleRucksacks(...grouped));
-
 export function groupDecisions(text: string) {
   const split = text.split(/\r?\n/);
   return split;
+}
+
+export function runningTotalOfPriorityForGroup(lines: string[]) {
+  const groupedIn3 = group3LinesTogether(lines);
+  let sum = 0;
+  for (let group of groupedIn3) {
+    const priority = givePriorityForCommonItemInGroupOf3(group);
+    sum += priority;
+  }
+  return sum;
+}
+
+export function givePriorityForCommonItemInGroupOf3(group: string[]) {
+  const itemInCommon = itemsInCommon({
+    firstCompartment: group[0],
+    secondCompartment: group[1],
+    thirdCompartment: group[2],
+  });
+  return priorityForEachItem(itemInCommon);
 }

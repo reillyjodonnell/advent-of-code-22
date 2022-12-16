@@ -8,6 +8,8 @@ import {
   sumOfPriorities,
   handleMultipleRucksacks,
   summedPrioritiesOfMultipleRucksacks,
+  group3LinesTogether,
+  runningTotalOfPriorityForGroup,
 } from './3';
 
 describe('The rucksack compartment problem', () => {
@@ -30,7 +32,7 @@ describe('The rucksack compartment problem', () => {
         firstCompartment: 'aAccnnN',
         secondCompartment: 'AaCCNpo',
       })
-    ).toBe('AaN');
+    ).toBe('aAN');
   });
   it('should give score priorities for each of the letters', () => {
     expect(priorityForEachItem('a')).toBe(1);
@@ -91,5 +93,46 @@ describe('The rucksack compartment problem', () => {
         'CrZsJsPPZsGzwwsLwLmpwMDw'
       )
     ).toBe(157);
+  });
+});
+describe('solving part 2', () => {
+  it('should find item in common for three sets of lines', () => {
+    expect(
+      itemsInCommon({
+        firstCompartment: 'abc',
+        secondCompartment: 'dea',
+        thirdCompartment: 'azz',
+      })
+    ).toBe('a');
+    expect(
+      itemsInCommon({
+        firstCompartment: 'bc',
+        secondCompartment: 'dea',
+        thirdCompartment: 'azz',
+      })
+    ).toBe('');
+    expect(
+      itemsInCommon({
+        firstCompartment: 'abc',
+        secondCompartment: 'ade',
+        thirdCompartment: 'zz',
+      })
+    ).toBe('');
+  });
+  it('should give a point value representing priority for each letter', () => {
+    expect(priorityForEachItem('a')).toBe(1);
+  });
+  it('should be able to group 3 lines together', () => {
+    expect(
+      group3LinesTogether(['aa', 'bb', 'cc', 'dd', 'ee', 'ff'])
+    ).toStrictEqual([
+      ['aa', 'bb', 'cc'],
+      ['dd', 'ee', 'ff'],
+    ]);
+  });
+  it('should be able to handle a large amount of lines and keep a running total of the score', () => {
+    expect(runningTotalOfPriorityForGroup(['a', 'a', 'a', 'b', 'b', 'b'])).toBe(
+      3
+    );
   });
 });
